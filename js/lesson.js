@@ -31,8 +31,9 @@ function goHome() {
 
 // ── Load Module ───────────────────────────────────────────
 function loadModule(id) {
-  state.moduleId = id;
-  state.module   = MODULES[id];
+  state.moduleId       = id;
+  state.module         = MODULES[id];
+  state.knowledgeRead  = {};
   window.CURRENT_MODULE_OBJ = state.module;
 
   if (!state.module) {
@@ -124,7 +125,7 @@ function updateStepProgress(index) {
   }
 }
 
-// ── Show Activity ─────────────────────────────────────────
+// ── Show Activity (with Knowledge first) ─────────────────
 function showActivity(index) {
   state.activityIndex = index;
   state.checked = false;
@@ -136,6 +137,46 @@ function showActivity(index) {
   const activity = state.module.activities[index];
   if (!activity) return;
 
+  // If activity has knowledge and hasn't been read yet, show knowledge first
+  if (activity.knowledge && !state.knowledgeRead?.[index]) {
+    showKnowledgePage(activity, index);
+    return;
+  }
+
+  renderActivity(activity);
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+function showKnowledgePage(activity, index) {
+  const container  = document.getElementById('activityContainer');
+  const feedback   = document.getElementById('feedbackBanner');
+  const btnCheck   = document.getElementById('btnCheck');
+  const btnNext    = document.getElementById('btnNext');
+
+  feedback.style.display = 'none';
+  btnCheck.style.display = 'none';
+  btnNext.style.display  = 'none';
+
+  document.getElementById('activityQuestion').textContent    = '';
+  document.getElementById('activityInstruction').textContent = '';
+  document.getElementById('activityTypeBadge').textContent   = '📚 Wissen';
+
+  const content = document.getElementById('activityContent');
+  const total   = state.module.activities.length;
+  content.innerHTML = renderKnowledgePage(activity, index, total) || '';
+
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+function showActivityFromKnowledge() {
+  const index = state.activityIndex;
+  if (!state.knowledgeRead) state.knowledgeRead = {};
+  state.knowledgeRead[index] = true;
+  renderActivity(state.module.activities[index]);
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+function renderActivity(activity) {
   // Reset UI
   const content = document.getElementById('activityContent');
   const feedback = document.getElementById('feedbackBanner');
@@ -162,7 +203,7 @@ function showActivity(index) {
     return;
   }
 
-  document.getElementById('activityQuestion').textContent   = activity.question;
+  document.getElementById('activityQuestion').textContent    = activity.question;
   document.getElementById('activityInstruction').textContent = activity.instruction || '';
 
   // Render by type
@@ -175,9 +216,6 @@ function showActivity(index) {
     case 'cable-colors': renderCableColors(activity, content);  break;
     default: content.innerHTML = `<p>Unbekannter Typ: ${activity.type}</p>`;
   }
-
-  // Scroll to top
-  window.scrollTo({ top: 0, behavior: 'smooth' });
 }
 
 // ── Multi-Question Quiz ───────────────────────────────────
