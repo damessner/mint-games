@@ -81,6 +81,7 @@ function selectRight(rightId, matchesLeft) {
       showFeedback(true, '✅ Alle Paare richtig gefunden! Ausgezeichnet!');
       document.getElementById('btnCheck').style.display = 'none';
       document.getElementById('btnNext').style.display = 'block';
+      if (typeof onMatchingCompleted === 'function') onMatchingCompleted();
     }
   } else {
     // Wrong

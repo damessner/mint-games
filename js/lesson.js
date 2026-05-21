@@ -29,6 +29,19 @@ let state = {
   timeLeft:       45 * 60,
   checked:        false,
   knowledgeRead:  {},
+  learning: {
+    totalChecks:        0,
+    correctChecks:      0,
+    currentStreak:      0,
+    bestStreak:         0,
+    hintUses:           0,
+    peekUses:           0,
+    hintCountedByKey:   {},
+    peekCountedByKey:   {},
+    attemptsByKey:      {},
+    solvedByKey:        {},
+    lastResult:         null,
+  }
 };
 
 // Global refs used by scaffolding engine
@@ -58,6 +71,19 @@ function loadModule(id) {
   state.moduleId       = id;
   state.module         = MODULES[id];
   state.knowledgeRead  = {};
+  state.learning = {
+    totalChecks:   0,
+    correctChecks: 0,
+    currentStreak: 0,
+    bestStreak:    0,
+    hintUses:      0,
+    peekUses:      0,
+    hintCountedByKey: {},
+    peekCountedByKey: {},
+    attemptsByKey: {},
+    solvedByKey:   {},
+    lastResult:    null,
+  };
   window.CURRENT_MODULE_OBJ = state.module;
   SCAFFOLDING.peekCount = 0; // reset peek uses per module
 
@@ -181,11 +207,13 @@ function showKnowledgePage(activity, index) {
   const btnNext    = document.getElementById('btnNext');
   const scaffBar   = document.getElementById('scaffoldingBar');
   const hintPanel  = document.getElementById('hintPanel');
+  const coachPanel = document.getElementById('learningCoach');
 
   feedback.style.display = 'none';
   btnCheck.style.display = 'none';
   btnNext.style.display  = 'none';
   if (scaffBar)  scaffBar.style.display  = 'none';
+  if (coachPanel) coachPanel.style.display = 'none';
   if (hintPanel) { hintPanel.classList.remove('open'); hintPanel.innerHTML = ''; }
 
   document.getElementById('activityQuestion').textContent    = '';
@@ -217,6 +245,7 @@ function renderActivity(activity) {
   const btnCheck = document.getElementById('btnCheck');
   const btnNext  = document.getElementById('btnNext');
   const scaffBar = document.getElementById('scaffoldingBar');
+  const coachPanel = document.getElementById('learningCoach');
   const hintPanel = document.getElementById('hintPanel');
 
   content.innerHTML = '';
@@ -226,6 +255,7 @@ function renderActivity(activity) {
   btnCheck.style.display = 'block';
   btnNext.style.display  = 'none';
   btnCheck.disabled = false;
+  if (coachPanel) coachPanel.style.display = 'block';
   if (hintPanel) { hintPanel.classList.remove('open'); hintPanel.innerHTML = ''; }
 
   // Set header
@@ -238,6 +268,7 @@ function renderActivity(activity) {
     state.quizIndex   = 0;
     // Show scaffolding bar (no hint button on quiz – handled per-question)
     if (scaffBar) { scaffBar.style.display = 'flex'; renderScaffoldingBar(activity); }
+    updateLearningCoach();
     showQuizQuestion(activity, 0);
     return;
   }
@@ -261,6 +292,7 @@ function renderActivity(activity) {
     case 'pcinstall':    renderPcInstall(activity, content);    break;
     default: content.innerHTML = `<p>Unbekannter Typ: ${activity.type}</p>`;
   }
+  updateLearningCoach();
 }
 
 // ── Multi-Question Quiz ───────────────────────────────────
@@ -308,6 +340,7 @@ function showQuizQuestion(activity, qIndex) {
       `).join('')}
     </div>`;
   content.innerHTML = html;
+  updateLearningCoach();
 
   window.scrollTo({ top: 0, behavior: 'smooth' });
 }
@@ -327,6 +360,7 @@ function checkAnswer() {
     // Single quiz question check
     correct = checkQuiz(content);
     if (correct) state.quizCorrect++;
+    updateLearningStats(activity, correct);
 
     btnCheck.style.display = 'none';
     btnNext.style.display  = 'block';
@@ -335,6 +369,7 @@ function checkAnswer() {
     btnNext.textContent = isLast
       ? `Abschluss (${state.quizCorrect}/${state.quizTotal} richtig) →`
       : `Nächste Frage (${state.quizIndex + 2}/${state.quizTotal}) →`;
+    updateLearningCoach();
     return;
   }
 
@@ -343,7 +378,11 @@ function checkAnswer() {
     case 'timeline':     correct = checkTimeline(content);    break;
     case 'dragdrop':     correct = checkDragDrop(content);    break;
     case 'fillgaps':     correct = checkFillGaps(content);    break;
-    case 'matching':     correct = checkMatching(content);    return; // matching handles its own next
+    case 'matching':
+      correct = checkMatching(content);
+      if (correct) onMatchingCompleted();
+      updateLearningCoach();
+      return;
     case 'sorting':      correct = checkSorting(content);     break;
     case 'cable-colors': correct = checkCableColors(content); break;
     case 'pcassembly':   correct = checkPcAssembly(content);  break;
@@ -351,11 +390,16 @@ function checkAnswer() {
     case 'pcinstall':    correct = checkPcInstall(content);   break;
   }
 
+  updateLearningStats(activity, correct);
+
   state.checked = true;
   btnCheck.style.display = 'none';
   btnNext.style.display  = 'block';
 
-  if (correct) saveProgress();
+  if (correct) {
+    saveProgress();
+  }
+  updateLearningCoach();
 }
 
 // ── Next Activity ─────────────────────────────────────────
@@ -393,6 +437,100 @@ function nextActivity() {
     // All done
     saveProgress(true);
     showCertificate(state.quizCorrect, state.quizTotal);
+  }
+}
+
+/**
+ * Reopens the current activity knowledge card from the scaffolding toolbar.
+ * Triggered by the "Wissen wiederholen" button and delegates rendering to showKnowledgePage.
+ */
+function reopenKnowledge() {
+  const activity = state.module?.activities?.[state.activityIndex];
+  if (!activity?.knowledge) return;
+  showKnowledgePage(activity, state.activityIndex);
+}
+
+function onMatchingCompleted() {
+  const activity = state.module?.activities?.[state.activityIndex];
+  if (!activity || activity.type !== 'matching' || state.checked) return;
+  state.checked = true;
+  updateLearningStats(activity, true);
+  saveProgress();
+  updateLearningCoach();
+}
+
+function updateLearningStats(activity, correct) {
+  if (!activity?.id) return;
+  const key = activity.type === 'quiz-multi'
+    ? `${activity.id}-q${state.quizIndex}`
+    : activity.id;
+
+  const currentAttempts = (state.learning.attemptsByKey[key] || 0) + 1;
+  state.learning.attemptsByKey[key] = currentAttempts;
+
+  state.learning.totalChecks += 1;
+  if (correct) {
+    state.learning.correctChecks += 1;
+    state.learning.currentStreak += 1;
+    state.learning.bestStreak = Math.max(state.learning.bestStreak, state.learning.currentStreak);
+    state.learning.solvedByKey[key] = true;
+  } else {
+    state.learning.currentStreak = 0;
+  }
+
+  if (SCAFFOLDING?.hintUsed && !state.learning.hintCountedByKey[key]) {
+    state.learning.hintUses += 1;
+    state.learning.hintCountedByKey[key] = true;
+  }
+  if (SCAFFOLDING?.peekUsed && !state.learning.peekCountedByKey[key]) {
+    state.learning.peekUses += 1;
+    state.learning.peekCountedByKey[key] = true;
+  }
+
+  state.learning.lastResult = {
+    correct,
+    attempts: currentAttempts,
+    usedSupport: !!(SCAFFOLDING?.hintUsed || SCAFFOLDING?.peekUsed),
+  };
+}
+
+function updateLearningCoach() {
+  const progressEl = document.getElementById('coachProgress');
+  const accuracyEl = document.getElementById('coachAccuracy');
+  const streakEl   = document.getElementById('coachStreak');
+  const helpEl     = document.getElementById('coachHelpUsage');
+  const levelEl    = document.getElementById('coachLevelLabel');
+  const messageEl  = document.getElementById('coachMessage');
+  if (!progressEl || !accuracyEl || !streakEl || !helpEl || !levelEl || !messageEl) return;
+
+  const totalActivities = state.module?.activities?.length || 0;
+  const currentStep = Math.min(state.activityIndex + 1, totalActivities);
+  const accuracy = state.learning.totalChecks > 0
+    ? Math.round((state.learning.correctChecks / state.learning.totalChecks) * 100)
+    : 0;
+
+  progressEl.textContent = `${currentStep}/${totalActivities}`;
+  accuracyEl.textContent = `${accuracy}%`;
+  streakEl.textContent = `${state.learning.currentStreak}`;
+  helpEl.textContent = `${state.learning.hintUses + state.learning.peekUses}`;
+
+  const streak = state.learning.currentStreak;
+  if (streak >= 5) levelEl.textContent = 'Master';
+  else if (streak >= 3) levelEl.textContent = 'Pro';
+  else if (streak >= 1) levelEl.textContent = 'Fokus';
+  else levelEl.textContent = 'Warm-up';
+
+  const last = state.learning.lastResult;
+  if (!last) {
+    messageEl.textContent = 'Lies die Wissensseite in Ruhe und starte dann mit Fokus in die Aufgabe.';
+  } else if (!last.correct) {
+    messageEl.textContent = 'Guter Versuch! Nutze „📚 Wissen wiederholen“ und den Hinweis, dann klappt der nächste Check.';
+  } else if (last.attempts === 1 && !last.usedSupport) {
+    messageEl.textContent = 'Stark! Direkt korrekt ohne Hilfe – du baust richtig sichere Grundlagen auf.';
+  } else if (last.attempts > 1) {
+    messageEl.textContent = 'Top Lernfortschritt: Nachbessern und erneut prüfen ist genau die richtige Strategie.';
+  } else {
+    messageEl.textContent = 'Weiter so! Du bist auf Kurs – halte den Fokus für die nächsten Aufgaben.';
   }
 }
 

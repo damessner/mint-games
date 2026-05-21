@@ -22,9 +22,16 @@ function renderScaffoldingBar(activity) {
 
   const hasHint = !!(activity.hint || activity.explanation || (activity.questions && activity.questions[0]?.explanation));
   const peekLeft = SCAFFOLDING.MAX_PEEKS - SCAFFOLDING.peekCount;
+  const hasKnowledge = !!activity.knowledge;
 
   bar.innerHTML = `
     <span class="scaffolding-label">🛟 Hilfe:</span>
+
+    ${hasKnowledge ? `
+      <button class="btn-scaffold btn-review" onclick="reopenKnowledge()" title="Öffnet die Wissensseite dieser Aktivität erneut">
+        📚 Wissen wiederholen
+      </button>
+    ` : ''}
 
     ${hasHint ? `
       <button class="btn-scaffold btn-hint" id="btnHint" onclick="showHint()" title="Zeigt einen Hinweis zur Aufgabe">
