@@ -12,6 +12,7 @@
   <link rel="stylesheet" href="css/main.css" />
   <link rel="stylesheet" href="css/lesson.css" />
   <link rel="stylesheet" href="css/knowledge.css" />
+  <link rel="stylesheet" href="css/scaffolding.css" />
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
 </head>
 <body class="lesson-body">
@@ -58,6 +59,16 @@
       <div class="activity-content" id="activityContent">
       </div>
 
+      <!-- Scaffolding Bar -->
+      <div class="scaffolding-bar" id="scaffoldingBar" style="display:none">
+        <!-- Filled dynamically -->
+      </div>
+
+      <!-- Hint Panel -->
+      <div class="hint-panel" id="hintPanel">
+        <!-- Filled dynamically -->
+      </div>
+
       <!-- Feedback Banner -->
       <div class="feedback-banner" id="feedbackBanner" style="display:none">
         <span class="feedback-icon" id="feedbackIcon"></span>
@@ -102,6 +113,25 @@
 
   </main>
 
+  <!-- Peek Overlay (outside main, fixed position) -->
+  <div class="peek-overlay" id="peekOverlay" onclick="closePeekOnBackdrop(event)">
+    <div class="peek-card">
+      <div class="peek-header">
+        <div class="peek-title">👁️ Lösung (kurz ansehen)</div>
+        <div class="peek-countdown-wrap">
+          <div class="peek-countdown" id="peekCountdown">10</div>
+          <div class="peek-countdown-label">Sekunden</div>
+        </div>
+      </div>
+      <div class="peek-progress-bar">
+        <div class="peek-progress-fill" id="peekProgressFill"></div>
+      </div>
+      <div class="peek-content" id="peekContent"></div>
+      <p class="peek-warning">⚠️ Die Lösung wird automatisch nach 10 Sekunden ausgeblendet.</p>
+      <button class="peek-close-btn" onclick="closePeek()">✕ Schließen</button>
+    </div>
+  </div>
+
   <script src="js/engines/knowledge.js"></script>
   <script src="js/data/module1.js"></script>
   <script src="js/data/module2.js"></script>
@@ -112,6 +142,7 @@
   <script src="js/engines/sorting.js"></script>
   <script src="js/engines/timeline.js"></script>
   <script src="js/engines/cablecolors.js"></script>
+  <script src="js/engines/scaffolding.js"></script>
   <script src="js/engines/certificate.js"></script>
   <script src="js/lesson.js"></script>
 </body>

@@ -1,0 +1,335 @@
+/* ============================================
+   MINT-Games – Scaffolding Styles
+   Hint panel + Peek overlay
+   ============================================ */
+
+/* ---- Scaffolding Toolbar ---- */
+.scaffolding-bar {
+  display: flex;
+  gap: var(--space-sm);
+  align-items: center;
+  padding: var(--space-sm) 0;
+  flex-wrap: wrap;
+}
+
+.scaffolding-label {
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--color-text-dim);
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  flex: 0 0 auto;
+}
+
+.btn-scaffold {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 10px 16px;
+  border-radius: var(--radius-md);
+  font-size: 14px;
+  font-weight: 700;
+  border: 2px solid transparent;
+  transition: all var(--transition-fast);
+  min-height: 44px;
+  position: relative;
+  overflow: hidden;
+}
+
+/* Hint button */
+.btn-hint {
+  background: hsla(38, 95%, 62%, 0.1);
+  border-color: hsla(38, 95%, 62%, 0.3);
+  color: var(--color-accent);
+}
+
+.btn-hint:hover:not(:disabled) {
+  background: hsla(38, 95%, 62%, 0.18);
+  border-color: hsla(38, 95%, 62%, 0.5);
+  transform: translateY(-1px);
+  box-shadow: 0 4px 16px var(--color-accent-glow);
+}
+
+/* Peek button */
+.btn-peek {
+  background: hsla(270, 80%, 65%, 0.1);
+  border-color: hsla(270, 80%, 65%, 0.3);
+  color: var(--color-purple);
+}
+
+.btn-peek:hover:not(:disabled) {
+  background: hsla(270, 80%, 65%, 0.18);
+  border-color: hsla(270, 80%, 65%, 0.5);
+  transform: translateY(-1px);
+  box-shadow: 0 4px 16px hsla(270, 80%, 65%, 0.3);
+}
+
+/* Used state */
+.btn-scaffold:disabled,
+.btn-scaffold.used {
+  opacity: 0.38;
+  cursor: not-allowed;
+  transform: none !important;
+  box-shadow: none !important;
+}
+
+/* Uses counter badge */
+.scaffold-uses {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 20px;
+  height: 20px;
+  padding: 0 5px;
+  background: hsla(255,255%,255%,0.12);
+  border-radius: var(--radius-full);
+  font-size: 11px;
+  font-weight: 900;
+}
+
+/* ---- Hint Panel ---- */
+.hint-panel {
+  display: none;
+  flex-direction: column;
+  gap: var(--space-sm);
+  background: linear-gradient(135deg, hsla(38,95%,62%,0.1), hsla(38,95%,62%,0.05));
+  border: 1px solid hsla(38, 95%, 62%, 0.3);
+  border-left: 4px solid var(--color-accent);
+  border-radius: var(--radius-lg);
+  padding: var(--space-md) var(--space-lg);
+  animation: slideDown 0.3s ease both;
+}
+
+.hint-panel.open {
+  display: flex;
+}
+
+@keyframes slideDown {
+  from { opacity: 0; transform: translateY(-12px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+.hint-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-sm);
+}
+
+.hint-title {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-family: var(--font-heading);
+  font-size: 14px;
+  font-weight: 800;
+  color: var(--color-accent);
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+}
+
+.hint-close {
+  background: none;
+  border: none;
+  color: var(--color-text-dim);
+  font-size: 18px;
+  min-height: unset;
+  min-width: unset;
+  padding: 4px;
+  line-height: 1;
+  cursor: pointer;
+}
+
+.hint-close:hover { color: var(--color-text); }
+
+.hint-text {
+  font-size: 15px;
+  line-height: 1.65;
+  color: var(--color-text);
+  white-space: pre-line;
+}
+
+.hint-extra {
+  font-size: 13px;
+  color: var(--color-text-muted);
+  font-style: italic;
+}
+
+/* ---- Peek Overlay ---- */
+.peek-overlay {
+  display: none;
+  position: fixed;
+  inset: 0;
+  z-index: 500;
+  background: hsla(225, 20%, 6%, 0.7);
+  backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
+  align-items: center;
+  justify-content: center;
+  animation: fadeIn 0.2s ease both;
+}
+
+.peek-overlay.active {
+  display: flex;
+}
+
+.peek-card {
+  position: relative;
+  max-width: 600px;
+  width: 90%;
+  max-height: 80vh;
+  overflow-y: auto;
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-xl);
+  padding: var(--space-xl);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-lg);
+  box-shadow: var(--shadow-lg), 0 0 60px hsla(270, 80%, 65%, 0.2);
+  border-top: 3px solid var(--color-purple);
+  animation: bounce-in 0.4s ease both;
+}
+
+.peek-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-md);
+}
+
+.peek-title {
+  font-family: var(--font-heading);
+  font-size: 18px;
+  font-weight: 900;
+  color: var(--color-purple);
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.peek-countdown-wrap {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+  flex-shrink: 0;
+}
+
+.peek-countdown {
+  font-family: var(--font-heading);
+  font-size: 32px;
+  font-weight: 900;
+  color: var(--color-accent);
+  line-height: 1;
+  min-width: 48px;
+  text-align: center;
+  transition: color 0.3s ease;
+}
+
+.peek-countdown.urgent { color: var(--color-danger); animation: pulse 0.5s ease-in-out infinite; }
+
+.peek-countdown-label {
+  font-size: 10px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--color-text-dim);
+}
+
+/* Progress bar for countdown */
+.peek-progress-bar {
+  height: 4px;
+  background: var(--color-border);
+  border-radius: var(--radius-full);
+  overflow: hidden;
+  margin-top: -8px;
+}
+
+.peek-progress-fill {
+  height: 100%;
+  background: linear-gradient(90deg, var(--color-purple), var(--color-accent));
+  border-radius: var(--radius-full);
+  transition: width 1s linear;
+}
+
+/* Answer reveal content */
+.peek-content {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-sm);
+}
+
+.peek-answer-item {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--space-md);
+  padding: var(--space-sm) var(--space-md);
+  background: hsla(162, 72%, 48%, 0.1);
+  border: 1px solid hsla(162, 72%, 48%, 0.25);
+  border-radius: var(--radius-md);
+  animation: fadeInUp 0.3s ease both;
+}
+
+.peek-answer-num {
+  font-family: var(--font-heading);
+  font-size: 13px;
+  font-weight: 800;
+  color: var(--color-secondary);
+  min-width: 24px;
+  flex-shrink: 0;
+}
+
+.peek-answer-text {
+  font-size: 14px;
+  color: var(--color-text);
+  line-height: 1.4;
+  font-weight: 500;
+}
+
+.peek-answer-sub {
+  font-size: 12px;
+  color: var(--color-text-muted);
+  margin-top: 2px;
+}
+
+/* Wire peek row */
+.peek-wire-row {
+  display: flex;
+  align-items: center;
+  gap: var(--space-sm);
+  padding: 8px var(--space-md);
+  background: var(--color-surface2);
+  border-radius: var(--radius-sm);
+}
+
+.peek-wire-swatch {
+  width: 28px;
+  height: 14px;
+  border-radius: 3px;
+  flex-shrink: 0;
+}
+
+.peek-close-btn {
+  width: 100%;
+  padding: 14px;
+  background: var(--color-surface2);
+  border: 1px solid var(--color-border);
+  color: var(--color-text-muted);
+  border-radius: var(--radius-lg);
+  font-size: 15px;
+  font-weight: 700;
+}
+
+.peek-close-btn:hover {
+  background: var(--color-border);
+  color: var(--color-text);
+}
+
+/* Warning text inside peek */
+.peek-warning {
+  font-size: 12px;
+  color: var(--color-text-dim);
+  text-align: center;
+  font-style: italic;
+}

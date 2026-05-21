@@ -8,14 +8,19 @@ let state = {
   moduleId:       null,
   module:         null,
   activityIndex:  0,
-  quizIndex:      0,      // for multi-question quiz
+  quizIndex:      0,
   score:          0,
   quizTotal:      0,
   quizCorrect:    0,
   timerInterval:  null,
   timeLeft:       45 * 60,
   checked:        false,
+  knowledgeRead:  {},
 };
+
+// Global refs used by scaffolding engine
+window.CURRENT_ACTIVITY   = null;
+window.CURRENT_QUIZ_INDEX = 0;
 
 // ── Boot ──────────────────────────────────────────────────
 document.addEventListener('DOMContentLoaded', () => {
@@ -26,7 +31,13 @@ document.addEventListener('DOMContentLoaded', () => {
 
 function goHome() {
   if (state.timerInterval) clearInterval(state.timerInterval);
+  closePeek();
   window.location.href = 'index.html';
+}
+
+// Close peek when clicking the dark backdrop (not the card itself)
+function closePeekOnBackdrop(e) {
+  if (e.target.id === 'peekOverlay') closePeek();
 }
 
 // ── Load Module ───────────────────────────────────────────
@@ -35,6 +46,7 @@ function loadModule(id) {
   state.module         = MODULES[id];
   state.knowledgeRead  = {};
   window.CURRENT_MODULE_OBJ = state.module;
+  SCAFFOLDING.peekCount = 0; // reset peek uses per module
 
   if (!state.module) {
     alert('Modul nicht gefunden!');
@@ -148,14 +160,17 @@ function showActivity(index) {
 }
 
 function showKnowledgePage(activity, index) {
-  const container  = document.getElementById('activityContainer');
   const feedback   = document.getElementById('feedbackBanner');
   const btnCheck   = document.getElementById('btnCheck');
   const btnNext    = document.getElementById('btnNext');
+  const scaffBar   = document.getElementById('scaffoldingBar');
+  const hintPanel  = document.getElementById('hintPanel');
 
   feedback.style.display = 'none';
   btnCheck.style.display = 'none';
   btnNext.style.display  = 'none';
+  if (scaffBar)  scaffBar.style.display  = 'none';
+  if (hintPanel) { hintPanel.classList.remove('open'); hintPanel.innerHTML = ''; }
 
   document.getElementById('activityQuestion').textContent    = '';
   document.getElementById('activityInstruction').textContent = '';
@@ -177,11 +192,16 @@ function showActivityFromKnowledge() {
 }
 
 function renderActivity(activity) {
+  window.CURRENT_ACTIVITY   = activity;
+  window.CURRENT_QUIZ_INDEX = 0;
+
   // Reset UI
-  const content = document.getElementById('activityContent');
+  const content  = document.getElementById('activityContent');
   const feedback = document.getElementById('feedbackBanner');
   const btnCheck = document.getElementById('btnCheck');
   const btnNext  = document.getElementById('btnNext');
+  const scaffBar = document.getElementById('scaffoldingBar');
+  const hintPanel = document.getElementById('hintPanel');
 
   content.innerHTML = '';
   content.dataset.type = activity.type;
@@ -190,6 +210,7 @@ function renderActivity(activity) {
   btnCheck.style.display = 'block';
   btnNext.style.display  = 'none';
   btnCheck.disabled = false;
+  if (hintPanel) { hintPanel.classList.remove('open'); hintPanel.innerHTML = ''; }
 
   // Set header
   document.getElementById('activityTypeBadge').textContent = activity.badge || activity.type;
@@ -199,12 +220,17 @@ function renderActivity(activity) {
     state.quizTotal   = activity.questions.length;
     state.quizCorrect = 0;
     state.quizIndex   = 0;
+    // Show scaffolding bar (no hint button on quiz – handled per-question)
+    if (scaffBar) { scaffBar.style.display = 'flex'; renderScaffoldingBar(activity); }
     showQuizQuestion(activity, 0);
     return;
   }
 
   document.getElementById('activityQuestion').textContent    = activity.question;
   document.getElementById('activityInstruction').textContent = activity.instruction || '';
+
+  // Show scaffolding bar
+  if (scaffBar) { scaffBar.style.display = 'flex'; renderScaffoldingBar(activity); }
 
   // Render by type
   switch (activity.type) {
@@ -222,18 +248,24 @@ function renderActivity(activity) {
 function showQuizQuestion(activity, qIndex) {
   const q = activity.questions[qIndex];
   state.quizIndex = qIndex;
+  window.CURRENT_QUIZ_INDEX = qIndex;
 
   document.getElementById('activityQuestion').textContent =
     `Frage ${qIndex + 1} von ${activity.questions.length}: ${q.q}`;
   document.getElementById('activityInstruction').textContent =
     'Wähle die richtige Antwort aus.';
 
-  const content = document.getElementById('activityContent');
+  const content  = document.getElementById('activityContent');
+  const scaffBar = document.getElementById('scaffoldingBar');
+  const hintPanel = document.getElementById('hintPanel');
+
   content.innerHTML = '';
-  content.dataset.selected = '';
-  content.dataset.correct  = q.correct;
+  content.dataset.selected    = '';
+  content.dataset.correct     = q.correct;
   content.dataset.explanation = q.explanation || '';
-  content.dataset.quizType = 'multi';
+  content.dataset.quizType    = 'multi';
+
+  if (hintPanel) { hintPanel.classList.remove('open'); hintPanel.innerHTML = ''; }
 
   const feedback = document.getElementById('feedbackBanner');
   feedback.style.display = 'none';
@@ -243,6 +275,9 @@ function showQuizQuestion(activity, qIndex) {
   btnCheck.style.display = 'block';
   btnCheck.disabled = true;
   btnNext.style.display = 'none';
+
+  // Refresh scaffolding bar for this question
+  if (scaffBar) { scaffBar.style.display = 'flex'; renderScaffoldingBar(activity); }
 
   const html = `
     <div class="quiz-options" id="quizOptions">

@@ -15,9 +15,10 @@
   --color-secondary-glow: hsla(162, 72%, 48%, 0.3);
   --color-accent:    hsl(38, 95%, 62%);
   --color-accent-glow: hsla(38, 95%, 62%, 0.3);
+  --color-purple:    hsl(270, 80%, 68%);
+  --color-purple-glow: hsla(270, 80%, 68%, 0.3);
   --color-danger:    hsl(0, 80%, 62%);
   --color-danger-glow: hsla(0, 80%, 62%, 0.3);
-  --color-purple:    hsl(270, 80%, 65%);
 
   --color-text:      hsl(220, 25%, 95%);
   --color-text-muted: hsl(220, 15%, 60%);
