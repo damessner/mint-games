@@ -850,7 +850,7 @@ function renderInstallStep(container) {
 
   const html = `
     <div class="win-setup-wrap">
-      <div class="win-setup-window" id="winSetupWindow" style="height: ${installState.step === 8 ? '100%' : '420px'}">
+      <div class="win-setup-window" id="winSetupWindow" style="height: ${installState.step === 8 ? '100%' : 'auto'}; min-height: ${installState.step === 8 ? '100%' : '430px'};">
         ${installState.step < 8 ? `
           <div class="win-setup-header">
             <span class="win-setup-title">Windows-Setup</span>
