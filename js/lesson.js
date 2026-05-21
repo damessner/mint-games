@@ -2,7 +2,20 @@
 // MINT-Games – Lesson Controller
 // ============================================================
 
-const MODULES = { 1: MODULE_1, 2: MODULE_2, 3: MODULE_3, 4: MODULE_4, 5: MODULE_5, 6: MODULE_6 };
+const MODULES = { 
+  1: MODULE_1, 
+  2: MODULE_2, 
+  3: MODULE_3, 
+  4: MODULE_4, 
+  5: MODULE_5, 
+  6: MODULE_6,
+  7: MODULE_7,
+  8: MODULE_8,
+  9: MODULE_9,
+  10: MODULE_10,
+  11: MODULE_11,
+  12: MODULE_12
+};
 
 let state = {
   moduleId:       null,

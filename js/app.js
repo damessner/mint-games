@@ -11,7 +11,7 @@ function startModule(id) {
 }
 
 function loadAllProgress() {
-  const moduleIds = [1, 2, 3, 4, 5, 6];
+  const moduleIds = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12];
   let totalCompleted = 0;
   let totalCerts = 0;
 
@@ -30,7 +30,13 @@ function loadAllProgress() {
       3: { totalActivities: 6 },
       4: { totalActivities: 6 },
       5: { totalActivities: 6 },
-      6: { totalActivities: 6 }
+      6: { totalActivities: 6 },
+      7: { totalActivities: 6 },
+      8: { totalActivities: 6 },
+      9: { totalActivities: 6 },
+      10: { totalActivities: 6 },
+      11: { totalActivities: 6 },
+      12: { totalActivities: 6 }
     };
     const total = MODULES_CLIENT[id]?.totalActivities || 6;
 
@@ -56,7 +62,7 @@ function loadAllProgress() {
   if (certsEl)     certsEl.textContent     = totalCerts;
 
   // Animate numbers
-  animateCounter('totalModules', 6);
+  animateCounter('totalModules', 12);
   animateCounter('completedModules', totalCompleted);
   animateCounter('totalCerts', totalCerts);
 }
