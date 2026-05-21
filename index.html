@@ -11,7 +11,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&family=Inter:wght@400;500;600&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="css/main.css" />
-  <link rel="stylesheet" href="css/home.css" />
+  <link rel="stylesheet" href="css/home.css?v=1.1" />
 </head>
 <body>
   <!-- Header -->
@@ -58,15 +58,15 @@
   </section>
 
   <!-- Sponsor Banner -->
-  <section class="sponsor-section animate-fadeinup">
-    <div class="sponsor-card glass-card">
-      <div class="sponsor-logo-wrap">
-        <img src="mint-tirol-colored.svg" alt="MINT Tirol Logo" class="sponsor-logo" />
+  <section class="sponsor-section animate-fadeinup" style="max-width: 1200px; margin: 0 auto 30px; padding: 0 var(--space-xl);">
+    <div class="sponsor-card glass-card" style="display: flex; flex-wrap: wrap; align-items: center; gap: 24px; padding: 20px; border: 1px solid var(--color-border); border-radius: var(--radius-lg); background: linear-gradient(135deg, hsla(220, 90%, 62%, 0.05), hsla(162, 72%, 48%, 0.05));">
+      <div class="sponsor-logo-wrap" style="display: flex; justify-content: center; align-items: center; background: #ffffff; padding: 10px; border-radius: var(--radius-md); width: 140px; height: 120px; min-width: 140px; box-shadow: var(--shadow-sm); flex-shrink: 0;">
+        <img src="mint-tirol-colored.svg" alt="MINT Tirol Logo" class="sponsor-logo" width="108" height="93" style="max-width: 100%; height: auto; display: block; object-fit: contain;" />
       </div>
-      <div class="sponsor-info">
-        <span class="sponsor-badge">Offizielle Unterstützung</span>
-        <h3 class="sponsor-title">Gefördert durch den MINT-Scheck</h3>
-        <p class="sponsor-text">
+      <div class="sponsor-info" style="flex: 1 1 300px; display: flex; flex-direction: column; gap: 4px; text-align: left;">
+        <span class="sponsor-badge" style="align-self: flex-start; background: rgba(4, 243, 185, 0.1); border: 1px solid rgba(4, 243, 185, 0.3); border-radius: var(--radius-full); padding: 4px 12px; font-size: 11px; font-weight: 700; color: var(--color-secondary); text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 4px;">Offizielle Unterstützung</span>
+        <h3 class="sponsor-title" style="font-family: var(--font-heading); font-size: 20px; font-weight: 800; color: var(--color-text); margin: 0; line-height: 1.2;">Gefördert durch den MINT-Scheck</h3>
+        <p class="sponsor-text" style="font-size: 14px; color: var(--color-text-muted); margin: 0; line-height: 1.5;">
           Dieses Projekt wurde durch einen <strong>MINT-Scheck</strong> vom <strong>Land Tirol</strong>, der <strong>AK Tirol</strong>, der <strong>WKO Tirol</strong> und der <strong>IV Tirol</strong> gefördert und offiziell unterstützt.
         </p>
       </div>
