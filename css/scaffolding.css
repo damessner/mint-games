@@ -50,6 +50,20 @@
   box-shadow: 0 4px 16px var(--color-accent-glow);
 }
 
+/* Knowledge review button */
+.btn-review {
+  background: hsla(220, 90%, 62%, 0.1);
+  border-color: hsla(220, 90%, 62%, 0.3);
+  color: var(--color-primary);
+}
+
+.btn-review:hover:not(:disabled) {
+  background: hsla(220, 90%, 62%, 0.18);
+  border-color: hsla(220, 90%, 62%, 0.5);
+  transform: translateY(-1px);
+  box-shadow: 0 4px 16px var(--color-primary-glow);
+}
+
 /* Peek button */
 .btn-peek {
   background: hsla(270, 80%, 65%, 0.1);

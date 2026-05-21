@@ -222,6 +222,81 @@
   line-height: 1.6;
 }
 
+.learning-coach {
+  background: linear-gradient(135deg, hsla(220,90%,62%,0.14), hsla(162,72%,48%,0.1));
+  border: 1px solid hsla(220,90%,62%,0.26);
+  border-radius: var(--radius-lg);
+  padding: var(--space-md) var(--space-lg);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-sm);
+}
+
+.learning-coach-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-sm);
+}
+
+.learning-coach-title {
+  font-size: 13px;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--color-primary);
+}
+
+.learning-coach-level {
+  padding: 4px 10px;
+  border-radius: var(--radius-full);
+  background: hsla(162,72%,48%,0.2);
+  border: 1px solid hsla(162,72%,48%,0.35);
+  color: var(--color-secondary);
+  font-size: 11px;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+}
+
+.learning-coach-stats {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: var(--space-sm);
+}
+
+.coach-stat {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  padding: 8px 10px;
+  border-radius: var(--radius-md);
+  background: hsla(225,20%,8%,0.32);
+  border: 1px solid var(--color-border);
+}
+
+.coach-stat span {
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--color-text-dim);
+}
+
+.coach-stat strong {
+  font-family: var(--font-heading);
+  font-size: 17px;
+  font-weight: 900;
+  color: var(--color-text);
+}
+
+.learning-coach-message {
+  font-size: 14px;
+  line-height: 1.5;
+  color: var(--color-text);
+  margin: 0;
+}
+
 /* ---- Activity Content Areas ---- */
 .activity-content {
   width: 100%;
@@ -957,6 +1032,7 @@
   .drag-target-row { flex-direction: column; align-items: flex-start; }
   .drag-target-label { min-width: unset; }
   .activity-actions { flex-direction: column; }
+  .learning-coach-stats { grid-template-columns: 1fr 1fr; }
   .timeline-slot { padding-left: 0; }
   .timeline-line { left: 52px; }
 }
