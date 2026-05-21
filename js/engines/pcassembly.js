@@ -850,7 +850,7 @@ function renderInstallStep(container) {
 
   const html = `
     <div class="win-setup-wrap">
-      <div class="win-setup-window" id="winSetupWindow" style="height: ${installState.step === 8 ? '100%' : '370px'}">
+      <div class="win-setup-window" id="winSetupWindow" style="height: ${installState.step === 8 ? '100%' : '420px'}">
         ${installState.step < 8 ? `
           <div class="win-setup-header">
             <span class="win-setup-title">Windows-Setup</span>
@@ -908,13 +908,27 @@ function startInstallProgress(container) {
   installState.progress = 0;
   
   const timer = setInterval(() => {
+    // Check if we are still on step 6. If not (e.g. user refreshed/changed), clear timer.
+    if (installState.step !== 6) {
+      clearInterval(timer);
+      return;
+    }
+
     installState.progress += 2;
     const bar = document.getElementById('winProgressBar');
     if (bar) bar.style.width = installState.progress + '%';
     
-    // Update active state in list
-    if (installState.progress === 20 || installState.progress === 70 || installState.progress === 90 || installState.progress === 100) {
-      renderInstallStep(container);
+    // Update active states in the DOM directly rather than re-rendering the whole step!
+    const progressItems = container.querySelectorAll('.win-progress-item');
+    if (progressItems.length === 4) {
+      // Item 0: Kopieren (done if progress >= 20)
+      updateProgressItemUI(progressItems[0], installState.progress >= 20, installState.progress < 20);
+      // Item 1: Vorbereiten (done if progress >= 70, active if progress >= 20)
+      updateProgressItemUI(progressItems[1], installState.progress >= 70, installState.progress >= 20 && installState.progress < 70);
+      // Item 2: Features (done if progress >= 90, active if progress >= 70)
+      updateProgressItemUI(progressItems[2], installState.progress >= 90, installState.progress >= 70 && installState.progress < 90);
+      // Item 3: Updates (done if progress >= 100, active if progress >= 90)
+      updateProgressItemUI(progressItems[3], installState.progress >= 100, installState.progress >= 90 && installState.progress < 100);
     }
     
     if (installState.progress >= 100) {
@@ -926,6 +940,22 @@ function startInstallProgress(container) {
       }, 800);
     }
   }, 100);
+}
+
+function updateProgressItemUI(itemEl, isDone, isActive) {
+  const iconEl = itemEl.querySelector('.win-progress-status-icon');
+  if (isDone) {
+    itemEl.classList.remove('active');
+    itemEl.classList.add('done');
+    if (iconEl) iconEl.textContent = '💚';
+  } else if (isActive) {
+    itemEl.classList.remove('done');
+    itemEl.classList.add('active');
+    if (iconEl) iconEl.textContent = '⏳';
+  } else {
+    itemEl.classList.remove('done', 'active');
+    if (iconEl) iconEl.textContent = '⚪';
+  }
 }
 
 function updateUsername(val) {
