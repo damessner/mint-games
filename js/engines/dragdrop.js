@@ -11,13 +11,14 @@ let dragState = {
 };
 
 function renderDragDrop(activity, container) {
+  const shuffledItems = [...activity.items].sort(() => Math.random() - 0.5);
   const html = `
     <div class="drag-area">
       <p style="font-size:13px;color:var(--color-text-muted);margin-bottom:4px">
         Ziehe die Begriffe in die richtige Kategorie:
       </p>
       <div class="drag-items-pool" id="drag-pool">
-        ${activity.items.map(item => `
+        ${shuffledItems.map(item => `
           <div class="drag-item"
             id="ditem-${item.id}"
             data-id="${item.id}"

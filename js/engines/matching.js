@@ -10,11 +10,14 @@ let matchState = {
 function renderMatching(activity, container) {
   matchState = { selectedLeft: null, matched: {} };
 
+  const shuffledLeft = [...activity.leftItems].sort(() => Math.random() - 0.5);
+  const shuffledRight = [...activity.rightItems].sort(() => Math.random() - 0.5);
+
   const html = `
     <div class="matching-area">
       <div class="matching-col">
         <div class="matching-col-title">Person / Begriff</div>
-        ${activity.leftItems.map(item => `
+        ${shuffledLeft.map(item => `
           <button class="match-item selectable"
             id="mleft-${item.id}"
             data-id="${item.id}"
@@ -26,7 +29,7 @@ function renderMatching(activity, container) {
       </div>
       <div class="matching-col">
         <div class="matching-col-title">Beschreibung</div>
-        ${activity.rightItems.map(item => `
+        ${shuffledRight.map(item => `
           <button class="match-item selectable"
             id="mright-${item.id}"
             data-id="${item.id}"
