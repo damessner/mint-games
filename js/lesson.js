@@ -380,11 +380,7 @@ function checkAnswer() {
     case 'fillgaps':     correct = checkFillGaps(content);    break;
     case 'matching':
       correct = checkMatching(content);
-      if (correct && !state.checked) {
-        state.checked = true;
-        updateLearningStats(activity, true);
-        saveProgress();
-      }
+      if (correct) onMatchingCompleted();
       updateLearningCoach();
       return;
     case 'sorting':      correct = checkSorting(content);     break;
@@ -444,6 +440,10 @@ function nextActivity() {
   }
 }
 
+/**
+ * Reopens the current activity knowledge card from the scaffolding toolbar.
+ * Triggered by the "Wissen wiederholen" button and delegates rendering to showKnowledgePage.
+ */
 function reopenKnowledge() {
   const activity = state.module?.activities?.[state.activityIndex];
   if (!activity?.knowledge) return;
