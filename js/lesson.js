@@ -2,7 +2,7 @@
 // MINT-Games – Lesson Controller
 // ============================================================
 
-const MODULES = { 1: MODULE_1, 2: MODULE_2 };
+const MODULES = { 1: MODULE_1, 2: MODULE_2, 3: MODULE_3, 4: MODULE_4 };
 
 let state = {
   moduleId:       null,
@@ -117,6 +117,9 @@ function getActivityIcon(type) {
     'sorting':     '🔢',
     'quiz-multi':  '🏆',
     'cable-colors':'🎨',
+    'pcassembly':  '🛠️',
+    'pcboot':      '⚡',
+    'pcinstall':   '💿',
   };
   return icons[type] || '❓';
 }
@@ -240,6 +243,9 @@ function renderActivity(activity) {
     case 'matching':     renderMatching(activity, content);     break;
     case 'sorting':      renderSorting(activity, content);      break;
     case 'cable-colors': renderCableColors(activity, content);  break;
+    case 'pcassembly':   renderPcAssembly(activity, content);   break;
+    case 'pcboot':       renderPcBoot(activity, content);       break;
+    case 'pcinstall':    renderPcInstall(activity, content);    break;
     default: content.innerHTML = `<p>Unbekannter Typ: ${activity.type}</p>`;
   }
 }
@@ -327,6 +333,9 @@ function checkAnswer() {
     case 'matching':     correct = checkMatching(content);    return; // matching handles its own next
     case 'sorting':      correct = checkSorting(content);     break;
     case 'cable-colors': correct = checkCableColors(content); break;
+    case 'pcassembly':   correct = checkPcAssembly(content);  break;
+    case 'pcboot':       correct = checkPcBoot(content);      break;
+    case 'pcinstall':    correct = checkPcInstall(content);   break;
   }
 
   state.checked = true;

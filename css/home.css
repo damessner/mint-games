@@ -232,6 +232,24 @@
   background: linear-gradient(135deg, hsla(162,72%,48%,0.06), transparent 60%);
 }
 
+#card-3:hover {
+  box-shadow: var(--shadow-lg), 0 0 32px var(--color-purple-glow);
+  border-color: hsla(270, 80%, 68%, 0.4);
+}
+
+#card-3::before {
+  background: linear-gradient(135deg, hsla(270, 80%, 68%, 0.06), transparent 60%);
+}
+
+#card-4:hover {
+  box-shadow: var(--shadow-lg), 0 0 32px var(--color-accent-glow);
+  border-color: hsla(38, 95%, 62%, 0.4);
+}
+
+#card-4::before {
+  background: linear-gradient(135deg, hsla(38, 95%, 62%, 0.06), transparent 60%);
+}
+
 .module-card-locked {
   opacity: 0.45;
   pointer-events: none;
@@ -296,6 +314,18 @@
   background: hsla(162,72%,48%,0.15);
   color: var(--color-secondary);
   border: 1px solid hsla(162,72%,48%,0.3);
+}
+
+.badge-purple {
+  background: hsla(270, 80%, 68%, 0.15);
+  color: var(--color-purple);
+  border: 1px solid hsla(270, 80%, 68%, 0.3);
+}
+
+.badge-orange {
+  background: hsla(38, 95%, 62%, 0.15);
+  color: var(--color-accent);
+  border: 1px solid hsla(38, 95%, 62%, 0.3);
 }
 
 .badge-gray {

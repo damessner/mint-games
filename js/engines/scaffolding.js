@@ -132,6 +132,21 @@ function buildHintContent(activity) {
       break;
     }
 
+    case 'pcassembly':
+      hintText = '🛠️ Montagetipp:\n\n1. Ziehe zuerst das **Mainboard** in den großen freien "Mainboard-Platz" des PC-Gehäuses.\n2. Erst wenn das Mainboard sitzt, kannst du **CPU, RAM und Grafikkarte** auf die Steckplätze des Mainboards platzieren!\n3. Netzteil und SSD haben feste, beschriftete eigene Bereiche im Gehäuse.';
+      hintExtra = 'Denke an die Sicherheitsregel: Vor dem Arbeiten immer statisch entladen!';
+      break;
+
+    case 'pcboot':
+      hintText = '⚡ Schritt-für-Schritt Boot-Lösung:\n\n1. Drücke den runden **Power-Button ⏻** am PC-Gehäuse.\n2. Lies die Fehlermeldung auf dem Monitor: "No Boot Device Found".\n3. Ziehe den **Windows 11 USB-Stick** auf den USB-Anschluss.\n4. Schalte den PC über den Power-Button aus und wieder an (Neustart), damit das BIOS den USB-Stick lädt!';
+      hintExtra = 'Ein Neustart ist zwingend nötig, damit das BIOS nach dem Einstecken des USB-Sticks neu sucht!';
+      break;
+
+    case 'pcinstall':
+      hintText = '💿 Windows-Setup Guide:\n\n1. Wähle die Sprache (Deutsch Österreich) und klicke "Weiter".\n2. Klicke auf "Jetzt installieren".\n3. Akzeptiere die Lizenzbedingungen und klicke "Weiter".\n4. Wähle **"Benutzerdefiniert"** für eine saubere Erstinstallation auf der leeren SSD.\n5. Klicke auf **"⭐ [Neu] Partition erstellen"** und dann auf "Weiter", um die SSD einzurichten.\n6. Warte den Kopiervorgang ab.\n7. Gib einen Benutzernamen ein und klicke "Einrichten".';
+      hintExtra = 'Ohne Partitionierung weiß Windows nicht, wo es installiert werden soll. Klicke unbedingt auf "Partition erstellen"!';
+      break;
+
     default:
       hintText = activity.hint || activity.explanation || 'Schau dir den Wissenstext nochmals an – alle Antworten sind dort erklärt!';
   }
@@ -343,6 +358,77 @@ function buildPeekContent(activity) {
               <span style="font-size:14px;font-weight:600;color:var(--color-text)">${wire.label}</span>
             </div>`;
         }).join('')}`;
+    }
+
+    case 'pcassembly': {
+      return `
+        <p style="font-size:13px;color:var(--color-text-muted);margin-bottom:var(--space-sm)">Richtige Reihenfolge & Platzierung:</p>
+        <div class="peek-answer-item" style="animation-delay:0.05s">
+          <span class="peek-answer-num">1</span>
+          <div>
+            <div class="peek-answer-text"><strong>Mainboard</strong></div>
+            <div class="peek-answer-sub">Muss als allererstes in das Gehäuse!</div>
+          </div>
+        </div>
+        <div class="peek-answer-item" style="animation-delay:0.1s">
+          <span class="peek-answer-num">2</span>
+          <div>
+            <div class="peek-answer-text"><strong>CPU, RAM, Grafikkarte</strong></div>
+            <div class="peek-answer-sub">Werden danach auf das eingebaute Mainboard gesteckt.</div>
+          </div>
+        </div>
+        <div class="peek-answer-item" style="animation-delay:0.15s">
+          <span class="peek-answer-num">3</span>
+          <div>
+            <div class="peek-answer-text"><strong>Netzteil & SSD</strong></div>
+            <div class="peek-answer-sub">Kommen in das Netzteil-Fach bzw. den SSD-Schacht.</div>
+          </div>
+        </div>
+      `;
+    }
+
+    case 'pcboot': {
+      return `
+        <p style="font-size:13px;color:var(--color-text-muted);margin-bottom:var(--space-sm)">Ablauf des erfolgreichen Bootens:</p>
+        <div class="peek-answer-item" style="animation-delay:0.05s">
+          <span class="peek-answer-num">1</span>
+          <div class="peek-answer-text">Power-Button drücken (Anschalten)</div>
+        </div>
+        <div class="peek-answer-item" style="animation-delay:0.1s">
+          <span class="peek-answer-num">2</span>
+          <div class="peek-answer-text">Windows-USB-Stick in den USB-Port stecken</div>
+        </div>
+        <div class="peek-answer-item" style="animation-delay:0.15s">
+          <span class="peek-answer-num">3</span>
+          <div class="peek-answer-text">Power-Button drücken (Ausschalten/Neustart)</div>
+        </div>
+        <div class="peek-answer-item" style="animation-delay:0.2s">
+          <span class="peek-answer-num">4</span>
+          <div class="peek-answer-text">Power-Button erneut drücken (Start vom USB-Stick!)</div>
+        </div>
+      `;
+    }
+
+    case 'pcinstall': {
+      return `
+        <p style="font-size:13px;color:var(--color-text-muted);margin-bottom:var(--space-sm)">Schlüsselstellen des Windows-Setups:</p>
+        <div class="peek-answer-item" style="animation-delay:0.05s">
+          <span class="peek-answer-num">1</span>
+          <div class="peek-answer-text">Sprachauswahl → Jetzt installieren → Lizenz akzeptieren</div>
+        </div>
+        <div class="peek-answer-item" style="animation-delay:0.1s">
+          <span class="peek-answer-num">2</span>
+          <div class="peek-answer-text">Installationstyp: <strong>Benutzerdefiniert</strong> wählen</div>
+        </div>
+        <div class="peek-answer-item" style="animation-delay:0.15s">
+          <span class="peek-answer-num">3</span>
+          <div class="peek-answer-text">Speicherort: Auf <strong>⭐ [Neu] Partition erstellen</strong> klicken</div>
+        </div>
+        <div class="peek-answer-item" style="animation-delay:0.2s">
+          <span class="peek-answer-num">4</span>
+          <div class="peek-answer-text">Dateien kopieren abwarten → Benutzername eingeben</div>
+        </div>
+      `;
     }
 
     default:

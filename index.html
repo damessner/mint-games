@@ -37,7 +37,7 @@
       <p class="hero-subtitle">45-Minuten-Module zu Digitaler Grundbildung – erkunde, spiele und erhalte dein Zertifikat!</p>
       <div class="hero-stats">
         <div class="stat">
-          <span class="stat-num" id="totalModules">2</span>
+          <span class="stat-num" id="totalModules">4</span>
           <span class="stat-label">Module</span>
         </div>
         <div class="stat">
@@ -140,19 +140,82 @@
         </div>
       </article>
 
-      <!-- Placeholder Modul 3 -->
-      <article class="module-card module-card-locked">
+      <!-- Modul 3 -->
+      <article class="module-card" id="card-3" data-module="3">
         <div class="module-card-header">
-          <div class="module-icon">🔒</div>
+          <div class="module-icon">🔀</div>
           <div class="module-meta">
             <span class="module-number">Modul 3</span>
-            <span class="module-duration">⏱ demnächst</span>
+            <span class="module-duration">⏱ 45 Minuten</span>
           </div>
-          <div class="module-badge badge-gray">Bald verfügbar</div>
+          <div class="module-badge badge-purple">Netzwerke</div>
         </div>
         <div class="module-card-body">
-          <h3 class="module-title">Datenschutz & Sicherheit</h3>
-          <p class="module-desc">Dieses Modul wird bald freigeschaltet. Lerne, wie du deine Daten im Internet schützt.</p>
+          <h3 class="module-title">VLANs, Switches & Loops</h3>
+          <p class="module-desc">Lerne, wie Switches Netzwerke verbinden, wie VLANs Datenverkehr trennen und wie das Spanning Tree Protocol (STP) gefährliche Schleifen verhindert.</p>
+          <div class="module-topics">
+            <span class="topic-tag">🔀 VLANs</span>
+            <span class="topic-tag">🔌 Access/Trunk</span>
+            <span class="topic-tag">🔄 Loops / Redundanz</span>
+            <span class="topic-tag">🛡️ STP</span>
+          </div>
+          <div class="module-activities">
+            <span class="activity-icon" title="Drag & Drop">🎯</span>
+            <span class="activity-icon" title="Lückentext">✏️</span>
+            <span class="activity-icon" title="Zuordnung">🔗</span>
+            <span class="activity-icon" title="Sortierung">🔢</span>
+            <span class="activity-icon" title="Quiz">🏆</span>
+          </div>
+        </div>
+        <div class="module-card-footer">
+          <div class="progress-bar-wrap">
+            <div class="progress-bar" id="progress-3" style="width: 0%"></div>
+          </div>
+          <span class="progress-label" id="progress-label-3">0 / 6 Aufgaben</span>
+          <button class="btn-start" id="btn-3" onclick="startModule(3)">
+            <span>Starten</span>
+            <span class="btn-arrow">→</span>
+          </button>
+        </div>
+      </article>
+
+      <!-- Modul 4 -->
+      <article class="module-card" id="card-4" data-module="4">
+        <div class="module-card-header">
+          <div class="module-icon">🖥️</div>
+          <div class="module-meta">
+            <span class="module-number">Modul 4</span>
+            <span class="module-duration">⏱ 45 Minuten</span>
+          </div>
+          <div class="module-badge badge-orange">Hardware</div>
+        </div>
+        <div class="module-card-body">
+          <h3 class="module-title">PC bauen & installieren</h3>
+          <p class="module-desc">Montiere virtuell einen eigenen Computer aus seinen Einzelteilen, boote ihn über das BIOS und installiere Schritt für Schritt Windows 11 auf der SSD.</p>
+          <div class="module-topics">
+            <span class="topic-tag">🛠️ Montage</span>
+            <span class="topic-tag">🧠 CPU & RAM</span>
+            <span class="topic-tag">⚡ BIOS & Booten</span>
+            <span class="topic-tag">💿 OS Setup</span>
+          </div>
+          <div class="module-activities">
+            <span class="activity-icon" title="Zuordnung">🔗</span>
+            <span class="activity-icon" title="PC-Montage">🛠️</span>
+            <span class="activity-icon" title="BIOS-Boot">⚡</span>
+            <span class="activity-icon" title="OS-Installation">💿</span>
+            <span class="activity-icon" title="Sortierung">🔢</span>
+            <span class="activity-icon" title="Quiz">🏆</span>
+          </div>
+        </div>
+        <div class="module-card-footer">
+          <div class="progress-bar-wrap">
+            <div class="progress-bar" id="progress-4" style="width: 0%"></div>
+          </div>
+          <span class="progress-label" id="progress-label-4">0 / 6 Aufgaben</span>
+          <button class="btn-start" id="btn-4" onclick="startModule(4)">
+            <span>Starten</span>
+            <span class="btn-arrow">→</span>
+          </button>
         </div>
       </article>
 
