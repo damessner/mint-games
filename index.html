@@ -37,7 +37,7 @@
       <p class="hero-subtitle">45-Minuten-Module zu Digitaler Grundbildung – erkunde, spiele und erhalte dein Zertifikat!</p>
       <div class="hero-stats">
         <div class="stat">
-          <span class="stat-num" id="totalModules">4</span>
+          <span class="stat-num" id="totalModules">6</span>
           <span class="stat-label">Module</span>
         </div>
         <div class="stat">
@@ -54,6 +54,34 @@
       <div class="deco-orb deco-orb-1"></div>
       <div class="deco-orb deco-orb-2"></div>
       <div class="deco-orb deco-orb-3"></div>
+    </div>
+  </section>
+
+  <!-- Info-Box für Lehrpersonen -->
+  <section class="teacher-info-section">
+    <div class="teacher-info-card">
+      <header class="teacher-info-header">
+        <span class="teacher-info-icon">🏫</span>
+        <h2 class="teacher-info-title">Info-Box für Lehrpersonen</h2>
+      </header>
+      <div class="teacher-info-grid">
+        <div class="teacher-info-item">
+          <h4>🎯 Lehrplan-Ausrichtung</h4>
+          <p>Die Lernmodule orientieren sich streng am österreichischen Lehrplan für <strong>Digitale Grundbildung</strong> an Mittelschulen. Die jeweiligen Kompetenzbereiche (Orientierung, Information, Technologie, Sicherheit) und Schulstufen sind direkt auf den Modulkarten ausgewiesen.</p>
+        </div>
+        <div class="teacher-info-item">
+          <h4>⏱️ 45-Minuten-Struktur</h4>
+          <p>Jedes Modul ist als eigenständige Unterrichtseinheit konzipiert. Nach einem kindgerechten Wissensinput mit Emojis folgen interaktive, spielerische Vertiefungsaufgaben zur direkten Festigung des Erlernten.</p>
+        </div>
+        <div class="teacher-info-item">
+          <h4>🔒 Datenschutz & Fortschritt</h4>
+          <p>Die Plattform läuft vollständig im Webbrowser der Schülerinnen und Schüler (optimiert für iPads). Es ist keine Anmeldung erforderlich. Der Lernfortschritt wird automatisch lokal im Browser gespeichert.</p>
+        </div>
+        <div class="teacher-info-item">
+          <h4>🏆 Leistungsnachweis</h4>
+          <p>Am Ende jedes Moduls steht ein Wissens-Checkup-Quiz. Nach erfolgreichem Abschluss können Schülerinnen und Schüler ihren Namen eingeben und ein persönliches PDF-Zertifikat als Nachweis herunterladen.</p>
+        </div>
+      </div>
     </div>
   </section>
 
@@ -87,6 +115,10 @@
             <span class="activity-icon" title="Lückentext">✏️</span>
             <span class="activity-icon" title="Quiz">❓</span>
             <span class="activity-icon" title="Zuordnung">🔗</span>
+          </div>
+          <div class="module-curriculum-tags">
+            <span class="curriculum-tag tag-grade">🏫 5.-6. Schulstufe</span>
+            <span class="curriculum-tag tag-competency">🎯 Orientierung</span>
           </div>
         </div>
         <div class="module-card-footer">
@@ -127,6 +159,10 @@
             <span class="activity-icon" title="Sortierung">🔢</span>
             <span class="activity-icon" title="Quiz">❓</span>
           </div>
+          <div class="module-curriculum-tags">
+            <span class="curriculum-tag tag-grade">🏫 7.-8. Schulstufe</span>
+            <span class="curriculum-tag tag-competency">🎯 Technologie</span>
+          </div>
         </div>
         <div class="module-card-footer">
           <div class="progress-bar-wrap">
@@ -152,7 +188,7 @@
         </div>
         <div class="module-card-body">
           <h3 class="module-title">VLANs, Switches & Loops</h3>
-          <p class="module-desc">Lerne, wie Switches Netzwerke verbinden, wie VLANs Datenverkehr trennen und wie das Spanning Tree Protocol (STP) gefährliche Schleifen verhindert.</p>
+          <p class="module-desc">Lerne, wie Switches Netzwerke verbinden, wie VLANs Datenverkehr trennen und wie das Spanning Tree Protocol (STP) Schleifen verhindert.</p>
           <div class="module-topics">
             <span class="topic-tag">🔀 VLANs</span>
             <span class="topic-tag">🔌 Access/Trunk</span>
@@ -165,6 +201,10 @@
             <span class="activity-icon" title="Zuordnung">🔗</span>
             <span class="activity-icon" title="Sortierung">🔢</span>
             <span class="activity-icon" title="Quiz">🏆</span>
+          </div>
+          <div class="module-curriculum-tags">
+            <span class="curriculum-tag tag-grade">🏫 7.-8. Schulstufe</span>
+            <span class="curriculum-tag tag-competency">🎯 Technologie</span>
           </div>
         </div>
         <div class="module-card-footer">
@@ -206,6 +246,10 @@
             <span class="activity-icon" title="Sortierung">🔢</span>
             <span class="activity-icon" title="Quiz">🏆</span>
           </div>
+          <div class="module-curriculum-tags">
+            <span class="curriculum-tag tag-grade">🏫 6.-8. Schulstufe</span>
+            <span class="curriculum-tag tag-competency">🎯 Technologie</span>
+          </div>
         </div>
         <div class="module-card-footer">
           <div class="progress-bar-wrap">
@@ -213,6 +257,92 @@
           </div>
           <span class="progress-label" id="progress-label-4">0 / 6 Aufgaben</span>
           <button class="btn-start" id="btn-4" onclick="startModule(4)">
+            <span>Starten</span>
+            <span class="btn-arrow">→</span>
+          </button>
+        </div>
+      </article>
+
+      <!-- Modul 5 -->
+      <article class="module-card" id="card-5" data-module="5">
+        <div class="module-card-header">
+          <div class="module-icon">🔒</div>
+          <div class="module-meta">
+            <span class="module-number">Modul 5</span>
+            <span class="module-duration">⏱ 45 Minuten</span>
+          </div>
+          <div class="module-badge badge-red">Sicherheit</div>
+        </div>
+        <div class="module-card-body">
+          <h3 class="module-title">Sicherheit & Cybermobbing</h3>
+          <p class="module-desc">Schütze deine Accounts mit starken Passwörtern, verstehe die Gefahren von Cybermobbing und lerne dich aktiv zu wehren.</p>
+          <div class="module-topics">
+            <span class="topic-tag">🔑 Passwörter</span>
+            <span class="topic-tag">🚫 Netiquette</span>
+            <span class="topic-tag">📱 2FA</span>
+            <span class="topic-tag">🎣 Phishing</span>
+          </div>
+          <div class="module-activities">
+            <span class="activity-icon" title="Drag & Drop">🎯</span>
+            <span class="activity-icon" title="Zuordnung">🔗</span>
+            <span class="activity-icon" title="Lückentext">✏️</span>
+            <span class="activity-icon" title="Sortierung">🔢</span>
+            <span class="activity-icon" title="Quiz">🏆</span>
+          </div>
+          <div class="module-curriculum-tags">
+            <span class="curriculum-tag tag-grade">🏫 5.-6. Schulstufe</span>
+            <span class="curriculum-tag tag-competency">🎯 Sicherheit</span>
+          </div>
+        </div>
+        <div class="module-card-footer">
+          <div class="progress-bar-wrap">
+            <div class="progress-bar" id="progress-5" style="width: 0%"></div>
+          </div>
+          <span class="progress-label" id="progress-label-5">0 / 6 Aufgaben</span>
+          <button class="btn-start" id="btn-5" onclick="startModule(5)">
+            <span>Starten</span>
+            <span class="btn-arrow">→</span>
+          </button>
+        </div>
+      </article>
+
+      <!-- Modul 6 -->
+      <article class="module-card" id="card-6" data-module="6">
+        <div class="module-card-header">
+          <div class="module-icon">🔍</div>
+          <div class="module-meta">
+            <span class="module-number">Modul 6</span>
+            <span class="module-duration">⏱ 45 Minuten</span>
+          </div>
+          <div class="module-badge badge-teal">Recherche</div>
+        </div>
+        <div class="module-card-body">
+          <h3 class="module-title">Suchen & Urheberrecht</h3>
+          <p class="module-desc">Finde verlässliche Infos im Netz mit cleveren Suchoperatoren, durchschaue Fake News und verstehe das Urheberrecht sowie Creative Commons.</p>
+          <div class="module-topics">
+            <span class="topic-tag">✨ Operatoren</span>
+            <span class="topic-tag">🕵️ Fake News</span>
+            <span class="topic-tag">📜 CC-Lizenzen</span>
+            <span class="topic-tag">⚖️ Urheberrecht</span>
+          </div>
+          <div class="module-activities">
+            <span class="activity-icon" title="Drag & Drop">🎯</span>
+            <span class="activity-icon" title="Zuordnung">🔗</span>
+            <span class="activity-icon" title="Lückentext">✏️</span>
+            <span class="activity-icon" title="Sortierung">🔢</span>
+            <span class="activity-icon" title="Quiz">🏆</span>
+          </div>
+          <div class="module-curriculum-tags">
+            <span class="curriculum-tag tag-grade">🏫 5.-7. Schulstufe</span>
+            <span class="curriculum-tag tag-competency">🎯 Information</span>
+          </div>
+        </div>
+        <div class="module-card-footer">
+          <div class="progress-bar-wrap">
+            <div class="progress-bar" id="progress-6" style="width: 0%"></div>
+          </div>
+          <span class="progress-label" id="progress-label-6">0 / 6 Aufgaben</span>
+          <button class="btn-start" id="btn-6" onclick="startModule(6)">
             <span>Starten</span>
             <span class="btn-arrow">→</span>
           </button>
