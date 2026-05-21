@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+  <title>MINT-Games | Lektion</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&family=Inter:wght@400;500;600&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="css/main.css" />
+  <link rel="stylesheet" href="css/lesson.css" />
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+</head>
+<body class="lesson-body">
+
+  <!-- Top Navigation Bar -->
+  <nav class="lesson-nav">
+    <button class="nav-back" onclick="goHome()" aria-label="Zurück zur Übersicht">
+      ← Übersicht
+    </button>
+    <div class="lesson-nav-center">
+      <span class="lesson-nav-title" id="lessonNavTitle">Lade Lektion…</span>
+    </div>
+    <div class="lesson-timer" id="lessonTimer">
+      <span class="timer-icon">⏱</span>
+      <span id="timerDisplay">45:00</span>
+    </div>
+  </nav>
+
+  <!-- Progress Steps -->
+  <div class="step-progress" id="stepProgress">
+    <!-- Filled dynamically -->
+  </div>
+
+  <!-- Main Lesson Area -->
+  <main class="lesson-main" id="lessonMain">
+
+    <!-- Loading screen -->
+    <div class="loading-screen" id="loadingScreen">
+      <div class="loading-spinner"></div>
+      <p>Lektion wird geladen…</p>
+    </div>
+
+    <!-- Activity Container -->
+    <div class="activity-container" id="activityContainer" style="display:none">
+
+      <!-- Activity Header -->
+      <div class="activity-header">
+        <div class="activity-type-badge" id="activityTypeBadge">Quiz</div>
+        <h2 class="activity-question" id="activityQuestion">Frage erscheint hier</h2>
+        <p class="activity-instruction" id="activityInstruction"></p>
+      </div>
+
+      <!-- Activity Content (dynamic) -->
+      <div class="activity-content" id="activityContent">
+      </div>
+
+      <!-- Feedback Banner -->
+      <div class="feedback-banner" id="feedbackBanner" style="display:none">
+        <span class="feedback-icon" id="feedbackIcon"></span>
+        <span class="feedback-text" id="feedbackText"></span>
+      </div>
+
+      <!-- Action Buttons -->
+      <div class="activity-actions">
+        <button class="btn-check" id="btnCheck" onclick="checkAnswer()">
+          Antwort prüfen ✓
+        </button>
+        <button class="btn-next" id="btnNext" onclick="nextActivity()" style="display:none">
+          Weiter →
+        </button>
+      </div>
+
+    </div>
+
+    <!-- Certificate Screen -->
+    <div class="certificate-screen" id="certificateScreen" style="display:none">
+      <div class="cert-confetti" id="confettiContainer"></div>
+      <div class="cert-card">
+        <div class="cert-seal">🏆</div>
+        <h2 class="cert-title">Herzlichen Glückwunsch!</h2>
+        <p class="cert-subtitle">Du hast das Modul erfolgreich abgeschlossen!</p>
+        <div class="cert-score-box">
+          <span class="cert-score" id="certScore">10/10</span>
+          <span class="cert-score-label">Punkte im Abschlussquiz</span>
+        </div>
+        <div class="cert-form">
+          <label for="pupilName" class="cert-label">Dein Name für das Zertifikat:</label>
+          <input type="text" id="pupilName" class="cert-input" placeholder="Vorname Nachname" maxlength="60" />
+        </div>
+        <button class="btn-cert" id="btnDownloadCert" onclick="downloadCertificate()">
+          📄 Zertifikat herunterladen
+        </button>
+        <button class="btn-home" onclick="goHome()">
+          ↩ Zurück zur Übersicht
+        </button>
+      </div>
+    </div>
+
+  </main>
+
+  <script src="js/data/module1.js"></script>
+  <script src="js/data/module2.js"></script>
+  <script src="js/engines/dragdrop.js"></script>
+  <script src="js/engines/fillgaps.js"></script>
+  <script src="js/engines/quiz.js"></script>
+  <script src="js/engines/matching.js"></script>
+  <script src="js/engines/sorting.js"></script>
+  <script src="js/engines/timeline.js"></script>
+  <script src="js/engines/cablecolors.js"></script>
+  <script src="js/engines/certificate.js"></script>
+  <script src="js/lesson.js"></script>
+</body>
+</html>

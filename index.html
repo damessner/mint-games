@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+  <meta name="description" content="MINT-Games – Interaktive Lernplattform für Digitale Grundbildung an österreichischen Mittelschulen" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+  <title>MINT-Games | Digitale Grundbildung</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&family=Inter:wght@400;500;600&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="css/main.css" />
+  <link rel="stylesheet" href="css/home.css" />
+</head>
+<body>
+  <!-- Header -->
+  <header class="site-header">
+    <div class="header-inner">
+      <div class="logo">
+        <div class="logo-icon">⚡</div>
+        <div class="logo-text">
+          <span class="logo-title">MINT-Games</span>
+          <span class="logo-subtitle">Digitale Grundbildung</span>
+        </div>
+      </div>
+      <div class="header-badge">
+        <span>🇦🇹 Lehrplan MS Österreich</span>
+      </div>
+    </div>
+  </header>
+
+  <!-- Hero -->
+  <section class="hero">
+    <div class="hero-content">
+      <h1 class="hero-title">Lerne mit <span class="gradient-text">interaktiven Spielen</span></h1>
+      <p class="hero-subtitle">45-Minuten-Module zu Digitaler Grundbildung – erkunde, spiele und erhalte dein Zertifikat!</p>
+      <div class="hero-stats">
+        <div class="stat">
+          <span class="stat-num" id="totalModules">2</span>
+          <span class="stat-label">Module</span>
+        </div>
+        <div class="stat">
+          <span class="stat-num" id="completedModules">0</span>
+          <span class="stat-label">Abgeschlossen</span>
+        </div>
+        <div class="stat">
+          <span class="stat-num" id="totalCerts">0</span>
+          <span class="stat-label">Zertifikate</span>
+        </div>
+      </div>
+    </div>
+    <div class="hero-deco" aria-hidden="true">
+      <div class="deco-orb deco-orb-1"></div>
+      <div class="deco-orb deco-orb-2"></div>
+      <div class="deco-orb deco-orb-3"></div>
+    </div>
+  </section>
+
+  <!-- Modules Grid -->
+  <main class="modules-section">
+    <h2 class="section-title">Deine Lernmodule</h2>
+    <div class="modules-grid" id="modulesGrid">
+
+      <!-- Modul 1 -->
+      <article class="module-card" id="card-1" data-module="1">
+        <div class="module-card-header">
+          <div class="module-icon">🌐</div>
+          <div class="module-meta">
+            <span class="module-number">Modul 1</span>
+            <span class="module-duration">⏱ 45 Minuten</span>
+          </div>
+          <div class="module-badge badge-info">Informatik</div>
+        </div>
+        <div class="module-card-body">
+          <h3 class="module-title">Geschichte des Internets</h3>
+          <p class="module-desc">Entdecke, wie das Internet entstanden ist – vom ARPANET bis zum modernen Web. Lerne wichtige Erfindungen und Pioniere kennen.</p>
+          <div class="module-topics">
+            <span class="topic-tag">🔬 ARPANET</span>
+            <span class="topic-tag">🕸 WWW</span>
+            <span class="topic-tag">📱 Web 2.0</span>
+            <span class="topic-tag">🔐 Protokolle</span>
+          </div>
+          <div class="module-activities">
+            <span class="activity-icon" title="Zeitstrahl">⏳</span>
+            <span class="activity-icon" title="Drag & Drop">🎯</span>
+            <span class="activity-icon" title="Lückentext">✏️</span>
+            <span class="activity-icon" title="Quiz">❓</span>
+            <span class="activity-icon" title="Zuordnung">🔗</span>
+          </div>
+        </div>
+        <div class="module-card-footer">
+          <div class="progress-bar-wrap">
+            <div class="progress-bar" id="progress-1" style="width: 0%"></div>
+          </div>
+          <span class="progress-label" id="progress-label-1">0 / 6 Aufgaben</span>
+          <button class="btn-start" id="btn-1" onclick="startModule(1)">
+            <span>Starten</span>
+            <span class="btn-arrow">→</span>
+          </button>
+        </div>
+      </article>
+
+      <!-- Modul 2 -->
+      <article class="module-card" id="card-2" data-module="2">
+        <div class="module-card-header">
+          <div class="module-icon">🔌</div>
+          <div class="module-meta">
+            <span class="module-number">Modul 2</span>
+            <span class="module-duration">⏱ 45 Minuten</span>
+          </div>
+          <div class="module-badge badge-green">Hardware</div>
+        </div>
+        <div class="module-card-body">
+          <h3 class="module-title">LAN-Kabel selbst crimpen</h3>
+          <p class="module-desc">Lerne alles über Netzwerkkabel – von Kabeltypen über Farbcodierungen bis zum Crimpen eines eigenen RJ45-Steckers.</p>
+          <div class="module-topics">
+            <span class="topic-tag">🔌 Kabeltypen</span>
+            <span class="topic-tag">🎨 Farbcodes</span>
+            <span class="topic-tag">🔧 RJ45</span>
+            <span class="topic-tag">📡 LAN/WAN</span>
+          </div>
+          <div class="module-activities">
+            <span class="activity-icon" title="Drag & Drop">🎯</span>
+            <span class="activity-icon" title="Farbzuordnung">🎨</span>
+            <span class="activity-icon" title="Lückentext">✏️</span>
+            <span class="activity-icon" title="Sortierung">🔢</span>
+            <span class="activity-icon" title="Quiz">❓</span>
+          </div>
+        </div>
+        <div class="module-card-footer">
+          <div class="progress-bar-wrap">
+            <div class="progress-bar" id="progress-2" style="width: 0%"></div>
+          </div>
+          <span class="progress-label" id="progress-label-2">0 / 6 Aufgaben</span>
+          <button class="btn-start" id="btn-2" onclick="startModule(2)">
+            <span>Starten</span>
+            <span class="btn-arrow">→</span>
+          </button>
+        </div>
+      </article>
+
+      <!-- Placeholder Modul 3 -->
+      <article class="module-card module-card-locked">
+        <div class="module-card-header">
+          <div class="module-icon">🔒</div>
+          <div class="module-meta">
+            <span class="module-number">Modul 3</span>
+            <span class="module-duration">⏱ demnächst</span>
+          </div>
+          <div class="module-badge badge-gray">Bald verfügbar</div>
+        </div>
+        <div class="module-card-body">
+          <h3 class="module-title">Datenschutz & Sicherheit</h3>
+          <p class="module-desc">Dieses Modul wird bald freigeschaltet. Lerne, wie du deine Daten im Internet schützt.</p>
+        </div>
+      </article>
+
+    </div>
+  </main>
+
+  <!-- Footer -->
+  <footer class="site-footer">
+    <p>MINT-Games · Mittelschule Telfs · Lehrplan Digitale Grundbildung Österreich 2022/23</p>
+  </footer>
+
+  <script src="js/app.js"></script>
+</body>
+</html>
