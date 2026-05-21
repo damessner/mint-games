@@ -444,7 +444,7 @@ function nextActivity() {
   }
 }
 
-function revisitKnowledge() {
+function reopenKnowledge() {
   const activity = state.module?.activities?.[state.activityIndex];
   if (!activity?.knowledge) return;
   showKnowledgePage(activity, state.activityIndex);
@@ -460,6 +460,7 @@ function onMatchingCompleted() {
 }
 
 function updateLearningStats(activity, correct) {
+  if (!activity?.id) return;
   const key = activity.type === 'quiz-multi'
     ? `${activity.id}-q${state.quizIndex}`
     : activity.id;

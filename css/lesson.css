@@ -1026,6 +1026,10 @@
   .learning-coach-stats { grid-template-columns: 1fr 1fr; }
 }
 
+@media (max-width: 480px) {
+  .learning-coach-stats { grid-template-columns: 1fr; }
+}
+
 @media (max-width: 768px) {
   .lesson-nav { padding: var(--space-sm) var(--space-md); grid-template-columns: auto 1fr auto; }
   .lesson-nav-title { font-size: 13px; }

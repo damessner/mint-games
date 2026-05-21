@@ -28,7 +28,7 @@ function renderScaffoldingBar(activity) {
     <span class="scaffolding-label">🛟 Hilfe:</span>
 
     ${hasKnowledge ? `
-      <button class="btn-scaffold btn-review" onclick="revisitKnowledge()" title="Öffnet die Wissensseite dieser Aktivität erneut">
+      <button class="btn-scaffold btn-review" onclick="reopenKnowledge()" title="Öffnet die Wissensseite dieser Aktivität erneut">
         📚 Wissen wiederholen
       </button>
     ` : ''}
