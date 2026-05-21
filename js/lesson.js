@@ -36,6 +36,8 @@ let state = {
     bestStreak:         0,
     hintUses:           0,
     peekUses:           0,
+    hintCountedByKey:   {},
+    peekCountedByKey:   {},
     attemptsByKey:      {},
     solvedByKey:        {},
     lastResult:         null,
@@ -76,6 +78,8 @@ function loadModule(id) {
     bestStreak:    0,
     hintUses:      0,
     peekUses:      0,
+    hintCountedByKey: {},
+    peekCountedByKey: {},
     attemptsByKey: {},
     solvedByKey:   {},
     lastResult:    null,
@@ -383,10 +387,16 @@ function checkAnswer() {
   }
 
   updateLearningStats(activity, correct);
+  if (activity.type === 'matching' && !correct) {
+    updateLearningCoach();
+    return;
+  }
+
+  state.checked = true;
+  btnCheck.style.display = 'none';
+  btnNext.style.display  = 'block';
+
   if (correct) {
-    state.checked = true;
-    btnCheck.style.display = 'none';
-    btnNext.style.display  = 'block';
     saveProgress();
   }
   updateLearningCoach();
@@ -412,6 +422,16 @@ function nextActivity() {
 
   // Regular activities
   if (activity.type === 'matching' && !state.checked) {
+    const content = document.getElementById('activityContent');
+    const total = parseInt(content?.dataset.totalPairs || '0');
+    const matched = typeof matchState === 'object'
+      ? Object.keys(matchState.matched || {}).length
+      : 0;
+    const solved = total > 0 && matched === total;
+    if (!solved) {
+      showFeedback(false, 'Bitte ordne zuerst alle Paare korrekt zu, bevor du weitergehst.');
+      return;
+    }
     state.checked = true;
     updateLearningStats(activity, true);
     saveProgress();
@@ -460,8 +480,14 @@ function updateLearningStats(activity, correct) {
     state.learning.currentStreak = 0;
   }
 
-  if (SCAFFOLDING?.hintUsed) state.learning.hintUses += 1;
-  if (SCAFFOLDING?.peekUsed) state.learning.peekUses += 1;
+  if (SCAFFOLDING?.hintUsed && !state.learning.hintCountedByKey[key]) {
+    state.learning.hintUses += 1;
+    state.learning.hintCountedByKey[key] = true;
+  }
+  if (SCAFFOLDING?.peekUsed && !state.learning.peekCountedByKey[key]) {
+    state.learning.peekUses += 1;
+    state.learning.peekCountedByKey[key] = true;
+  }
 
   state.learning.lastResult = {
     correct,
