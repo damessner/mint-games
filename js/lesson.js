@@ -378,7 +378,15 @@ function checkAnswer() {
     case 'timeline':     correct = checkTimeline(content);    break;
     case 'dragdrop':     correct = checkDragDrop(content);    break;
     case 'fillgaps':     correct = checkFillGaps(content);    break;
-    case 'matching':     correct = checkMatching(content);    break;
+    case 'matching':
+      correct = checkMatching(content);
+      if (correct && !state.checked) {
+        state.checked = true;
+        updateLearningStats(activity, true);
+        saveProgress();
+      }
+      updateLearningCoach();
+      return;
     case 'sorting':      correct = checkSorting(content);     break;
     case 'cable-colors': correct = checkCableColors(content); break;
     case 'pcassembly':   correct = checkPcAssembly(content);  break;
@@ -387,10 +395,6 @@ function checkAnswer() {
   }
 
   updateLearningStats(activity, correct);
-  if (activity.type === 'matching' && !correct) {
-    updateLearningCoach();
-    return;
-  }
 
   state.checked = true;
   btnCheck.style.display = 'none';
@@ -421,22 +425,6 @@ function nextActivity() {
   }
 
   // Regular activities
-  if (activity.type === 'matching' && !state.checked) {
-    const content = document.getElementById('activityContent');
-    const total = parseInt(content?.dataset.totalPairs || '0');
-    const matched = typeof matchState === 'object'
-      ? Object.keys(matchState.matched || {}).length
-      : 0;
-    const solved = total > 0 && matched === total;
-    if (!solved) {
-      showFeedback(false, 'Bitte ordne zuerst alle Paare korrekt zu, bevor du weitergehst.');
-      return;
-    }
-    state.checked = true;
-    updateLearningStats(activity, true);
-    saveProgress();
-  }
-
   const next = state.activityIndex + 1;
   if (next < state.module.activities.length) {
     const container = document.getElementById('activityContainer');
@@ -460,6 +448,15 @@ function revisitKnowledge() {
   const activity = state.module?.activities?.[state.activityIndex];
   if (!activity?.knowledge) return;
   showKnowledgePage(activity, state.activityIndex);
+}
+
+function onMatchingCompleted() {
+  const activity = state.module?.activities?.[state.activityIndex];
+  if (!activity || activity.type !== 'matching' || state.checked) return;
+  state.checked = true;
+  updateLearningStats(activity, true);
+  saveProgress();
+  updateLearningCoach();
 }
 
 function updateLearningStats(activity, correct) {
